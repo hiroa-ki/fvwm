@@ -122,6 +122,7 @@ typedef struct MenuParameters
 		unsigned is_sticky : 1;
 		unsigned is_submenu : 1;
 		unsigned is_triggered_by_keypress : 1;
+		unsigned hilight_window_temporarily : 1;
 	} flags;
 } MenuParameters;
 

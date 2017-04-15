@@ -76,6 +76,7 @@
 #define NO_LAYER		(1<<19)
 #define SHOW_SCREEN		(1<<20)
 #define SHOW_CURRENTPAGE	(1<<21)
+#define HILIGHT_WINDOW		(1<<22)
 #define SHOW_DEFAULT (SHOW_GEOMETRY | SHOW_ALLDESKS | SHOW_NORMAL | \
 	SHOW_ICONIC | SHOW_STICKY_ACROSS_PAGES | SHOW_STICKY_ACROSS_DESKS)
 
@@ -319,6 +320,10 @@ void CMD_WindowList(F_CMD_ARGS)
 				cpy = Scr.Vy / Scr.MyDisplayHeight;
 				flags &= ~SHOW_ALLDESKS;
 				flags |= SHOW_CURRENTPAGE;
+			}
+			else if (StrEquals(tok,"HilightWindow"))
+			{
+				flags |= HILIGHT_WINDOW;
 			}
 			else if (StrEquals(tok,"NotAlphabetic"))
 			{
@@ -1108,6 +1113,7 @@ void CMD_WindowList(F_CMD_ARGS)
 	mp.flags.is_already_mapped = 0;
 	mp.flags.is_triggered_by_keypress =
 		(!default_action && exc->x.etrigger->type == KeyPress);
+	mp.flags.hilight_window_temporarily = (flags & HILIGHT_WINDOW) ? 1 : 0;
 	mp.pops = &mops;
 	mp.ret_paction = &ret_action;
 	do_menu(&mp, &mret);

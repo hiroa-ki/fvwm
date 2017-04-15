@@ -68,6 +68,7 @@
 #include "menuparameters.h"
 #include "menus.h"
 #include "libs/FGettext.h"
+#include "borders.h"
 
 /* ---------------------------- local definitions -------------------------- */
 
@@ -5509,6 +5510,28 @@ static void __menu_loop(
 		{
 			is_finished = True;
 		}
+		if (!is_finished && med.mi &&
+		    pmp->flags.hilight_window_temporarily) {
+			int ret, win, dummy;
+			const char *action;
+			FvwmWindow *t;
+
+			action = med.mi->action;
+			ret = sscanf(action, "WindowId %u WindowListFunc %u",
+				     &win, &dummy);
+			if (ret != 2)
+				goto out;
+
+			for (t = Scr.FvwmRoot.next; t; t = t->next) {
+				Bool fake_focus;
+
+				fake_focus = FW_W(t) == win;
+				border_draw_decorations(t, PART_ALL, fake_focus,
+							True, CLEAR_ALL, NULL,
+							NULL);
+			}
+		}
+out:
 		XFlush(dpy);
 	}
 	__mloop_exit(pmp, pmret, pdkp, &mei, &med, &msi, &mops);
