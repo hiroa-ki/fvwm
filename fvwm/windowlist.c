@@ -75,6 +75,7 @@
 #define SHOW_PAGE_Y		(1<<18)
 #define NO_LAYER		(1<<19)
 #define SHOW_SCREEN		(1<<20)
+#define SHOW_CURRENTPAGE	(1<<21)
 #define SHOW_DEFAULT (SHOW_GEOMETRY | SHOW_ALLDESKS | SHOW_NORMAL | \
 	SHOW_ICONIC | SHOW_STICKY_ACROSS_PAGES | SHOW_STICKY_ACROSS_DESKS)
 
@@ -252,6 +253,7 @@ void CMD_WindowList(F_CMD_ARGS)
 	FvwmWindow * const fw = exc->w.fw;
 	const Window w = exc->w.w;
 	const exec_context_t *exc2;
+	int cpx = -1, cpy = -1;
 
 	memset(&mops, 0, sizeof(mops));
 	memset(&mret, 0, sizeof(MenuReturn));
@@ -310,6 +312,13 @@ void CMD_WindowList(F_CMD_ARGS)
 			{
 				desk = Scr.CurrentDesk;
 				flags &= ~SHOW_ALLDESKS;
+			}
+			else if (StrEquals(tok,"CurrentPage"))
+			{
+				cpx = Scr.Vx / Scr.MyDisplayWidth;
+				cpy = Scr.Vy / Scr.MyDisplayHeight;
+				flags &= ~SHOW_ALLDESKS;
+				flags |= SHOW_CURRENTPAGE;
 			}
 			else if (StrEquals(tok,"NotAlphabetic"))
 			{
@@ -751,6 +760,20 @@ void CMD_WindowList(F_CMD_ARGS)
 		for (ii = 0; ii < numWindows; ii++)
 		{
 			t = windowList[ii];
+			if (flags & SHOW_CURRENTPAGE) {
+				int tpx, tpy;
+
+				tpx = (Scr.Vx + t->g.frame.x +
+				       t->g.frame.width / 2) /
+				      Scr.MyDisplayWidth;
+				tpy = (Scr.Vy + t->g.frame.y +
+				       t->g.frame.height / 2) /
+				      Scr.MyDisplayHeight;
+
+				/* don't want other pages - skip */
+				if (tpx != cpx || tpy != cpy)
+					continue;
+			}
 			if (t->Desk != next_desk && !(flags & NO_DESK_SORT))
 			{
 				continue;
