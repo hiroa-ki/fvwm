@@ -138,6 +138,7 @@ passed to WindowList are separated by commas and can be
 <emphasis remap='I'>Function funcname</emphasis>,
 <emphasis remap='I'>Desk desknum</emphasis>,
 <emphasis remap='I'>CurrentDesk</emphasis>,
+<emphasis remap='I'>CurrentPage</emphasis>,
 <emphasis remap='I'>NoIcons</emphasis> / <emphasis remap='I'>Icons</emphasis> / <emphasis remap='I'>OnlyIcons</emphasis>,
 <emphasis remap='I'>NoNormal</emphasis> / <emphasis remap='I'>Normal</emphasis> / <emphasis remap='I'>OnlyNormal</emphasis>,
 <emphasis remap='I'>NoSticky</emphasis> / <emphasis remap='I'>Sticky</emphasis> / <emphasis remap='I'>OnlySticky</emphasis>,
@@ -197,6 +198,9 @@ WindowList <fvwmref cmd="Function"/> IFunc, NoSticky, CurrentDesk, NoIcons
 </programlisting>
 
 <para>If you use the
+<fvwmopt cmd="WindowList" opt="CurrentPage"/>
+option, only windows in current page are displayed.
+If you use the
 <fvwmopt cmd="WindowList" opt="Layer"/>
 <replaceable>m</replaceable>
 <optional><replaceable>n</replaceable></optional>
