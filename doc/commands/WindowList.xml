@@ -157,6 +157,7 @@ passed to WindowList are separated by commas and can be
 <emphasis remap='I'>SortByResource</emphasis>,
 <emphasis remap='I'>SortByClass</emphasis>,
 <emphasis remap='I'>NoHotkeys</emphasis>,
+<emphasis remap='I'>HilightWindow</emphasis>,
 <emphasis remap='I'>SelectOnRelease</emphasis>.</para>
 
 <para>(Note - normal means not iconic, sticky, or on top)</para>
@@ -256,6 +257,10 @@ display size.
 With
 <fvwmopt cmd="WindowList" opt="ShowScreen"/>,
 the window's Xinerama screen number is displayed.</para>
+
+<para>If you use the
+<fvwmopt cmd="WindowList" opt="HilightWindow"/>
+option, corresponding windows are temporarily hilighted while traversing the window list.</para>
 
 <para>The
 <fvwmopt cmd="WindowList" opt="MaxLabelWidth"/>
